@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة المصاريف</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .expense { margin-bottom: 10px; }
+        #total { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>إدارة المصاريف</h1>
+    <div>
+        <label for="description">الوصف:</label>
+        <input type="text" id="description" placeholder="مثال: طعام">
+        <label for="amount">المبلغ:</label>
+        <input type="number" id="amount" placeholder="0.00">
+        <button onclick="addExpense()">إضافة مصروف</button>
+    </div>
+    <h2>المصاريف</h2>
+    <ul id="expenses"></ul>
+    <p>المجموع: <span id="total">0.00</span> ريال</p>
+
+    <script>
+        let total = 0;
+        const expenses = [];
+
+        function addExpense() {
+            const desc = document.getElementById('description').value;
+            const amt = parseFloat(document.getElementById('amount').value);
+            if (desc && amt > 0) {
+                expenses.push({ description: desc, amount: amt });
+                total += amt;
+                updateList();
+                document.getElementById('description').value = '';
+                document.getElementById('amount').value = '';
+            }
+        }
+
+        function updateList() {
+            const list = document.getElementById('expenses');
+            list.innerHTML = '';
+            expenses.forEach(exp => {
+                const li = document.createElement('li');
+                li.textContent = `${exp.description}: ${exp.amount} ريال`;
+                list.appendChild(li);
+            });
+            document.getElementById('total').textContent = total.toFixed(2);
+        }
+    </script>
+</body>
+</html>
